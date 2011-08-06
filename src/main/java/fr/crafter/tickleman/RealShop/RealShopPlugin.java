@@ -349,44 +349,7 @@ public class RealShopPlugin extends RealPlugin
 	//--------------------------------------------------------------------------------- hasPermission
 	public boolean hasPermission(Player player, String permission)
 	{
-		if (realPermissions.permissionsPlugin.equals("none")) {
-			if (player.isOp()) {
-				// operator access everything
-				return true;
-			} else {
-				// permissions only for functions that users have access to
-				if (config.shopOpOnly.equals("true")) {
-					return false;
-				} else if (
-					permission.equals("shop")
-					|| permission.equals("help")
-					|| permission.equals("info")
-					|| permission.equals("create")
-					|| permission.equals("delete")
-					|| permission.equals("give")
-					|| permission.equals("open")
-					|| permission.equals("close")
-					|| permission.equals("buy")
-					|| permission.equals("sell")
-					|| permission.equals("xbuy")
-					|| permission.equals("xsell")
-					|| permission.equals("marketitemsonly")
-					|| permission.equals("damageditems")
-					|| permission.equals("price")
-					|| permission.equals("price.info")
-					|| permission.equals("price.display")
-					|| permission.equals("price.set")
-					|| permission.equals("price.del")
-				) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		} else {
-			// uses a permissions plugin
-			return realPermissions.hasPermission(player, permission);
-		}
+        return player.hasPermission("realshop."+permission);
 	}
 
 	//------------------------------------------------------------------------------------------ help
@@ -508,6 +471,7 @@ public class RealShopPlugin extends RealPlugin
 				String param4 = ((args.length > 3) ? args[3] : "");
 				// shortcuts
 				if (param.equals("")) param = "info";
+                else if (param.equals("c"))   param = "create";
 				else if (param.equals("?"))   param = "help";
 				else if (param.equals("b"))   param = "buy";
 				else if (param.equals("chk")) param = "check";
@@ -609,7 +573,7 @@ public class RealShopPlugin extends RealPlugin
 						RealShop neighborShop = ((neighbor == null) ? null : shopsFile.shopAt(neighbor));
 						if (shop == null) {
 							// /rshop commands on a chest that is not a shop
-							if (param.equals("create") || param.equals("c")) {
+							if (param.equals("create") ) {
 								registerBlockAsShop(player, block, param2);
 							} else {
 								player.sendMessage(

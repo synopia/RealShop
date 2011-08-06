@@ -19,6 +19,7 @@ public class RealShopCommands
 	//-------------------------------------------------------------------------------- marketPriceDel
 	public void marketPriceDel(Player player, String typeIdDamage)
 	{
+        typeIdDamage = getId(player, typeIdDamage);
 		plugin.marketFile.prices.remove(typeIdDamage);
 		plugin.marketFile.save();
 		player.sendMessage(
@@ -31,6 +32,7 @@ public class RealShopCommands
 	//---------------------------------------------------------------------------- marketPriceDisplay
 	public void marketPriceDisplay(Player player, String typeIdDamage)
 	{
+        typeIdDamage = getId(player, typeIdDamage);
 		RealPrice price = plugin.marketFile.prices.get(typeIdDamage);
 		if (price == null) {
 			player.sendMessage(
@@ -68,6 +70,7 @@ public class RealShopCommands
 	//-------------------------------------------------------------------------------- marketPriceSet
 	public void marketPriceSet(Player player, String typeIdDamage, String buyPrice, String sellPrice)
 	{
+        typeIdDamage = getId(player, typeIdDamage);
 		try {
 			RealPrice price = new RealPrice(
 				Double.parseDouble(buyPrice), Double.parseDouble(sellPrice.equals("") ? buyPrice : sellPrice)
@@ -98,6 +101,7 @@ public class RealShopCommands
 	//-------------------------------------------------------------------------------- playerPriceDel
 	public void playerPriceDel(Player player, String typeIdDamage)
 	{
+        typeIdDamage = getId(player, typeIdDamage);
 		RealPricesFile pricesFile = RealPricesFile.playerPricesFile(
 				plugin, player.getName(), null
 			);
@@ -113,6 +117,7 @@ public class RealShopCommands
 	//---------------------------------------------------------------------------- playerPriceDisplay
 	public void playerPriceDisplay(Player player, String typeIdDamage)
 	{
+        typeIdDamage = getId(player, typeIdDamage);
 		RealPricesFile pricesFile = RealPricesFile.playerPricesFile(
 				plugin, player.getName(), null
 			);
@@ -153,6 +158,7 @@ public class RealShopCommands
 	//-------------------------------------------------------------------------------- playerPriceSet
 	public void playerPriceSet(Player player, String typeIdDamage, String buyPrice, String sellPrice)
 	{
+        typeIdDamage = plugin.dataValuesFile.getId(typeIdDamage);
 		RealPricesFile pricesFile = RealPricesFile.playerPricesFile(
 			plugin, player.getName(), null
 		);
@@ -183,4 +189,12 @@ public class RealShopCommands
 		}
 	}
 
+    private String getId( Player player, String idOrName ) {
+        try {
+            return plugin.dataValuesFile.getId(idOrName);
+        } catch (IllegalArgumentException e) {
+            player.sendMessage(RealColor.cancel + plugin.lang.tr("Unknown item +item").replace("+item", RealColor.item+idOrName+RealColor.cancel));
+            return "";
+        }
+    }
 }

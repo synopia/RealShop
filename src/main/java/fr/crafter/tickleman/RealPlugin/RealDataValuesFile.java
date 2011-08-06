@@ -13,6 +13,7 @@ public class RealDataValuesFile
 	private final String fileName;
 
 	private HashMap<String, String> names = new HashMap<String, String>();
+	private HashMap<String, String> ids = new HashMap<String, String>();
 
 	private final RealPlugin plugin;
 
@@ -60,6 +61,20 @@ public class RealDataValuesFile
 		return result;
 	}
 
+    public String getId( String name ) {
+        try {
+            return Integer.parseInt(name)+"";
+        } catch (NumberFormatException e) {
+            name = name.toLowerCase();
+            name = name.replaceAll(" ", "_");
+            String result = ids.get(name);
+            if( result==null ) {
+                throw new IllegalArgumentException("Unknown item "+name );
+            }
+            return result;
+        }
+    }
+
 	//------------------------------------------------------------------------------------------- get
 	/**
 	 * Get main recipe for given item type id
@@ -106,6 +121,8 @@ public class RealDataValuesFile
 						typeName = line.nextToken().trim();
 						recipe = line.hasMoreTokens() ? line.nextToken().trim() : "";  
 						names.put(typeIdDamage, typeName);
+                        String name = typeName.replaceAll(" ", "_").toLowerCase();
+                        ids.put(name, typeIdDamage);
 						if (!recipe.equals("")) {
 							recipes.put(typeIdDamage, recipe);
 						}

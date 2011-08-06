@@ -16,6 +16,7 @@ public class PermissionsLink
 	//--------------------------------------------------------------------------------- hasPermission
 	public static boolean hasPermission(Player player, String permission)
 	{
+        plugin.log.warning("Checking permissions "+permission);
         return player.hasPermission(permission);
 	}
 
