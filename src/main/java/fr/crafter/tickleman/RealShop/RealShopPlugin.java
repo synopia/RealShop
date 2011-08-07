@@ -622,6 +622,7 @@ public class RealShopPlugin extends RealPlugin
 								if (neighbor != null) shopGive(player, neighbor, param2, true);
 							} else if (param.equals("infiniteBuy")) {
 								shop.setFlag("infiniteBuy", param2);
+                                if( neighbor!=null) neighborShop.setFlag("infiniteBuy", param2);
 								player.sendMessage(
 									RealColor.message
 									+ lang.tr("Infinite buy flag is")
@@ -630,6 +631,7 @@ public class RealShopPlugin extends RealPlugin
 								);
 							} else if (param.equals("infiniteSell")) {
 								shop.setFlag("infiniteSell", param2);
+                                if( neighbor!=null) neighborShop.setFlag("infiniteSell", param2);
 								player.sendMessage(
 									RealColor.message
 									+ lang.tr("Infinite sell flag is")
@@ -638,6 +640,7 @@ public class RealShopPlugin extends RealPlugin
 								);
 							} else if (param.equals("marketItemsOnly")) {
 								shop.setFlag("marketItemsOnly", param2);
+                                if( neighbor!=null) neighborShop.setFlag("marketItemsOnly", param2);
 								player.sendMessage(
 									RealColor.message
 									+ lang.tr("Trade market items only flag is")
@@ -646,6 +649,7 @@ public class RealShopPlugin extends RealPlugin
 								);
 							} else if (param.equals("damagedItems")) {
 								shop.setFlag("damagedItems", param2);
+                                if( neighbor!=null) neighborShop.setFlag("damagedItems", param2);
 								player.sendMessage(
 									RealColor.message
 									+ lang.tr("Damaged item buy/sell flag is")
